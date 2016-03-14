@@ -97,7 +97,7 @@ $(function () {
     function (chart) {
         if (!chart.renderer.forExport) {
             setInterval(function () {
-                $.get('/output.txt', function(txt) {
+                $.get('http://sfopendata.github.io/discover-open-data/output.txt', function(txt) {
                     var point = chart.series[0].points[0];
                     var lines = txt.split("\n");
                     var numbers = Math.floor(Math.random() * lines.length) + 1;
