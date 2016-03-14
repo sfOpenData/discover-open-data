@@ -119,7 +119,6 @@ $(function() {
           valueSuffix: ' km/h'
         }
       }]
-
     },
     // Add some life
     function(chart) {
