@@ -40,7 +40,7 @@ $(function () {
             }, {
                 // default background
             }, {
-                backgroundColor: '#DDD',
+                backgroundColor: null,
                 borderWidth: 0,
                 outerRadius: '105%',
                 innerRadius: '103%'
@@ -112,10 +112,3 @@ $(function () {
         }
     });
 });
-
-
-
-
-
-
-
