@@ -7,11 +7,11 @@ $(function () {
             plotBackgroundColor: null,
             plotBackgroundImage: null,
             plotBorderWidth: 0,
-            plotShadow: false
+            plotShadow: true
         },
 
         title: {
-            text: 'Speedometer'
+            text: 'Lincoln High School - Wind Speeds'
         },
 
         pane: {
@@ -35,7 +35,7 @@ $(function () {
                         [1, '#FFF']
                     ]
                 },
-                borderWidth: 1,
+                borderWidth: 0,
                 outerRadius: '107%'
             }, {
                 // default background
@@ -50,7 +50,7 @@ $(function () {
         // the value axis
         yAxis: {
             min: 0,
-            max: 200,
+            max: 10,
 
             minorTickInterval: 'auto',
             minorTickWidth: 1,
@@ -59,57 +59,63 @@ $(function () {
             minorTickColor: '#666',
 
             tickPixelInterval: 30,
-            tickWidth: 2,
+            tickWidth: 4,
             tickPosition: 'inside',
-            tickLength: 10,
+            tickLength: 12,
             tickColor: '#666',
             labels: {
                 step: 2,
                 rotation: 'auto'
             },
             title: {
-                text: 'km/h'
+                text: 'M/SEC'
             },
             plotBands: [{
                 from: 0,
-                to: 120,
+                to: 3,
                 color: '#55BF3B' // green
             }, {
-                from: 120,
-                to: 160,
+                from: 3,
+                to: 6,
                 color: '#DDDF0D' // yellow
             }, {
-                from: 160,
-                to: 200,
+                from: 6,
+                to: 10,
                 color: '#DF5353' // red
             }]
         },
 
         series: [{
             name: 'Speed',
-            data: [80],
+            data: [0],
             tooltip: {
-                valueSuffix: ' km/h'
+                valueSuffix: ' M/S'
             }
         }]
-
     },
-    // Add some life
+
     function (chart) {
         if (!chart.renderer.forExport) {
             setInterval(function () {
-                var point = chart.series[0].points[0],
-                    newVal,
-                    inc = Math.round((Math.random() - 0.5) * 20);
-
-                newVal = point.y + inc;
-                if (newVal < 0 || newVal > 200) {
-                    newVal = point.y - inc;
-                }
-
-                point.update(newVal);
-
+                $.get('/output.txt', function(txt) {
+                    var point = chart.series[0].points[0];
+                    var lines = txt.split("\n");
+                    var numbers = Math.floor(Math.random() * lines.length) + 1;
+                    for (var i = 0, len = lines.length; i < len; i++) {
+                        if (numbers == i) {
+                        numbers = parseFloat(lines[i]);
+                        point.update(numbers);
+                        }
+                    }
+                });
             }, 3000);
         }
     });
 });
+
+
+
+
+
+
+
